@@ -13,7 +13,12 @@
 #   Check Package:             'Ctrl + Shift + E'
 #   Test Package:              'Ctrl + Shift + T'
 
-generate <- function(nV,nC,method) {
+generateAlea <- function(nV,nC,method) {
+
+
+}
+
+generateBeta <- function(nV,nC,method) {
 
 
 }
