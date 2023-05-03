@@ -17,7 +17,7 @@
 # scrutin1 <- function(nVoter,nCandidat,situation) {
 #
 #     le paramètre "situation" est le résultat d'une fonction du package "voteSim"
-#     peut-être pas besoin de nVoter et nCandidat, juste à récupérer le nombre de ligne/col
+#     pas besoin de nVoter et nCandidat, juste à récupérer le nombre de ligne/col
 #     dans le tableau situation (si elle retourne bien un tableau)
 #
 # }
@@ -35,9 +35,7 @@ generate_beta <- function(n_voters,n_candidats,beta_a = 0.5,beta_b = 0.5, lambda
 }
 
 generate_spatial <- function(n_voters,n_candidats,placement = "uniform",score_method = "linear"){
-  # mettre un paramètre pour choisir la manière de placer les candidats/votants (uniform, beta, ...), aussi pour la fonction score
   n_dim <- 2 # constante
-
   # === placement === #
   if (placement == "uniform"){
     candidats<-data.frame(matrix(runif(n_candidats*n_dim), nrow = n_candidats, ncol=n_dim))
@@ -48,15 +46,16 @@ generate_spatial <- function(n_voters,n_candidats,placement = "uniform",score_me
     candidats <- data.frame(matrix(rbeta(n_candidats*n_dim, shape1 = beta_a, shape2 = beta_b),nrow = n_candidats,ncol = n_dim))
     voters <- data.frame(matrix(rbeta(n_voters*n_dim, shape1 = beta_a, shape2 = beta_b), nrow = n_voters, ncol = n_dim))
   }else{
+    # ...
   }
   # === distance between voters / candidats === #
-  mat_distances<-t(apply(voters,1, function(x) distance(x,candidats)))
+  matrix_distances<-t(apply(voters,1, function(x) distance(x,candidats)))
 
   # === distance to score === # (linear / sigmoide)
-  mat_scores<-DistToScores(mat_distances,method = score_method)
+  matrix_scores<-DistToScores(matrix_distances,method = score_method)
 
-  View(mat_distances) # test
-  View(mat_scores) # test
+  View(matrix_distances) # test
+  View(matrix_scores) # test
 
   # === plots === #
   plot(candidats, xlab="dim. 1", ylab="dim. 2", xlim=c(0,1), ylim=c(0,1), col="red", pch=c(17), cex=1.5, main="Spatial model")
@@ -67,12 +66,15 @@ generate_spatial <- function(n_voters,n_candidats,placement = "uniform",score_me
     points(voters[sample(n_voters,200),])
   }
 
-  return(mat_scores)
+  return(matrix_scores)
 }
 
-generate_alea <- function(n_voters,n_candidats,para) {
-
+library(truncnorm)
+generate_norm<-function(n_candidats, n_voters, min=0, max=1, mean=0.5, sd=0.25){
+  scores<-array(rtruncnorm(n_candidats*n_voters, a=min, b=max, mean = mean, sd = sd),c(n_candidats,n_voters))
+  return(scores)
 }
+
 
 
 
