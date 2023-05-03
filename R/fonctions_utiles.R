@@ -29,12 +29,23 @@ icdf <- function(u, x, n) {
 #formule distance spatiale
 ######################################
 
+#' Distance formula
+#' @export
+#' @param votant array
+#' @param candidats array
+#' @returns distance
 distance<-function(votant, candidats){apply(candidats, 1, function(x) sqrt(sum((votant-x)^2)))}
 
 ######################################
 #transformation des scores en distance
 ######################################
 
+#' Score to distance
+#' @export
+#' @param x score
+#' @param dim dimension int
+#' @param method method string
+#' @returns distance
 ScoresToDist<-function(x, dim=2, method="linear")
 {
   if (method=="linear")
@@ -55,6 +66,14 @@ ScoresToDist<-function(x, dim=2, method="linear")
 #transformation des distances en scores
 ######################################
 
+
+#' Distance to score
+#' @export
+#' @param dist int
+#' @param dim dimension int
+#' @param method method string
+#' @param lambda lambdad int
+#' @returns score
 DistToScores <- function(dist, dim=2, method="linear", lambda=5)
 {
   if (method=="linear"){
