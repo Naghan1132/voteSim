@@ -92,6 +92,8 @@ generate_spatial <- function(n_voters,n_candidats,placement = "uniform",score_me
   return(matrix_scores)
 }
 
+
+library(truncnorm)
 #' Generate truncated normal scores
 #'
 #' This function generates truncated normal scores using the 'rtruncnorm' function from the 'truncnorm' package.
@@ -104,11 +106,9 @@ generate_spatial <- function(n_voters,n_candidats,placement = "uniform",score_me
 #' @param sd The standard deviation of the truncated normal distribution.
 #'
 #' @return A matrix of scores with 'n_candidats' rows and 'n_voters' columns.
-#'
 #' @import truncnorm
 #'
 #' @export
-library(truncnorm)
 generate_norm<-function(n_candidats, n_voters, min=0, max=1, mean=0.5, sd=0.25){
   scores<-array(rtruncnorm(n_candidats*n_voters, a=min, b=max, mean = mean, sd = sd),c(n_candidats,n_voters))
   return(scores)
