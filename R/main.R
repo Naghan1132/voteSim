@@ -1,8 +1,3 @@
-# Hello, world!
-#
-# This is an example function named 'hello'
-# which prints 'Hello, world!'.
-#
 # You can learn more about package authoring with RStudio at:
 #
 #   http://r-pkgs.had.co.nz/
@@ -74,7 +69,5 @@ generate_norm<-function(n_candidats, n_voters, min=0, max=1, mean=0.5, sd=0.25){
   scores<-array(rtruncnorm(n_candidats*n_voters, a=min, b=max, mean = mean, sd = sd),c(n_candidats,n_voters))
   return(scores)
 }
-
-
 
 
