@@ -23,36 +23,56 @@
 # }
 
 
-generate_unif_continu <-function(nVoters, nCandidats, min=0, max=1){
-  pref<-array(runif(nCandidats*nVoters, min=min, max=max),c(nCandidats,nVoters))
-  return(pref)
+generate_unif_continu <-function(n_voters, n_candidats, min=0, max=1){
+  scores <- matrix(runif(n_candidats*n_voters, min=min, max=max),c(n_candidats,n_voters))
+  return(scores)
 }
 
-generate_alea <- function(nVoters,nCandidats,para) {
-
-
+generate_beta <- function(n_voters,n_candidats,beta_a = 0.5,beta_b = 0.5, lambda = 0,min = 0,max = 1) {
+  scores<-matrix(rbeta(n_candidats*n_voters, shape1 = beta_a, shape2 = beta_b, ncp=lambda),c(n_candidats,n_voters))
+  scores<-scores*(max-min)+min # on borne les prefs entre 0 et 1
+  return(scores)
 }
 
-generate_beta <- function(nVoters,nCandidats,para) {
-
-
-}
-
-generate_spatial <- function(n_voters,n_candidats,n_dim = 2,placement = "uniform",score_method = "linear"){
+generate_spatial <- function(n_voters,n_candidats,placement = "uniform",score_method = "linear"){
   # mettre un paramètre pour choisir la manière de placer les candidats/votants (uniform, beta, ...), aussi pour la fonction score
-  ### placement ###
-  if (placement == "linear"){
+  n_dim <- 2 # constante
+
+  # === placement === #
+  if (placement == "uniform"){
     candidats<-data.frame(matrix(runif(n_candidats*n_dim), nrow = n_candidats, ncol=n_dim))
     voters<-data.frame(matrix(runif(n_voters*n_dim), nrow = n_voters, ncol=n_dim))
+  }else if(placement == "beta"){
+    beta_a= 1.2 # 2 = points centrés
+    beta_b= 1.2
+    candidats <- data.frame(matrix(rbeta(n_candidats*n_dim, shape1 = beta_a, shape2 = beta_b),nrow = n_candidats,ncol = n_dim))
+    voters <- data.frame(matrix(rbeta(n_voters*n_dim, shape1 = beta_a, shape2 = beta_b), nrow = n_voters, ncol = n_dim))
+  }else{
   }
-
-  ### transformation distance to score
-
-  mat_scores<-DistToScores(mat_distances,method = score_method)
+  # === distance between voters / candidats === #
   mat_distances<-t(apply(voters,1, function(x) distance(x,candidats)))
 
+  # === distance to score === # (linear / sigmoide)
+  mat_scores<-DistToScores(mat_distances,method = score_method)
+
+  View(mat_distances) # test
+  View(mat_scores) # test
+
+  # === plots === #
+  plot(candidats, xlab="dim. 1", ylab="dim. 2", xlim=c(0,1), ylim=c(0,1), col="red", pch=c(17), cex=1.5, main="Spatial model")
+  text(candidats[,1]+0.001, candidats[,2]+0.001, labels=1:n_candidats, pos=4, col="red")
+  if(n_voters <= 200){
+    points(voters)
+  }else{
+    points(voters[sample(n_voters,200),])
+  }
+
+  return(mat_scores)
 }
 
+generate_alea <- function(n_voters,n_candidats,para) {
+
+}
 
 
 
