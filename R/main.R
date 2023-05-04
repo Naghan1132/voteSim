@@ -8,17 +8,6 @@
 #   Check Package:             'Ctrl + Shift + E'
 #   Test Package:              'Ctrl + Shift + T'
 
-# faire qql chose de la manière (pour le package méthode de vote :
-
-# library(voteSim)
-# situation <- generate_beta(100,5)
-# scrutin <- function(nVoter,nCandidat,situation) {
-#
-#     le paramètre "situation" est le résultat d'une fonction du package "voteSim"
-#     pas besoin de nVoter et nCandidat, juste à récupérer le nombre de ligne/col
-#     dans le tableau situation (si elle retourne bien un tableau)
-#
-# }
 
 #' Generates a simulation of voting according to a beta law, returns voters preferences
 #' @export
@@ -98,7 +87,7 @@ generate_spatial <- function(n_voters,n_candidats,placement = "uniform",score_me
     points(voters[sample(n_voters,200),])
   }
 
-  return(matrix_scores)
+  return(t(matrix_scores))
 }
 
 
