@@ -108,7 +108,8 @@ library(truncnorm)
 #'
 #' @export
 generate_norm<-function(n_candidats, n_voters, min=0, max=1, mean=0.5, sd=0.25){
-  scores<-array(rtruncnorm(n_candidats*n_voters, a=min, b=max, mean = mean, sd = sd),c(n_candidats,n_voters))
+  scores<-matrix(rtruncnorm(n_candidats*n_voters, a=min, b=max, mean = mean, sd = sd),c(n_candidats,n_voters))
+  View(t(scores))
   return(t(scores))
 }
 
