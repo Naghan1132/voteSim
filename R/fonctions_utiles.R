@@ -10,9 +10,25 @@
 ##               0.5 is used to avoid extremes values of ranks).
 fpx <- function(x) (rank(x, ties.method = "max") - 0.5) / length(x)
 
-## Function: icdf
-## Description : Generalized inverse of the empirical cumulative
-##               function.
+
+
+#' Generalized inverse of the empirical cumulative function.
+#'
+#' @param u a numeric vector of quantiles to be transformed.
+#' @param x a numeric vector of data values.
+#' @param n a positive integer specifying the length of the output vector.
+#'
+#' @return a numeric vector of transformed quantiles.
+#' @details Computes the generalized inverse of the empirical cumulative function,
+#' which transforms quantiles \code{u} to the corresponding values of \code{x} based on
+#' the frequency distribution of \code{x}.
+#'
+#' @importFrom stats splinefun
+#' @importFrom stats uniroot
+#' @examples
+#' icdf(runif(10), rnorm(100), 10)
+#'
+#' @export
 icdf <- function(u, x, n) {
   freq <- fpx(x)
   Fn   <- splinefun(x, freq, method = "monoH.FC")
@@ -25,20 +41,12 @@ icdf <- function(u, x, n) {
   return(xstar)
 }
 
-######################################
-#formule distance spatiale
-######################################
-
 #' Distance formula
 #' @export
 #' @param votant array
 #' @param candidats array
 #' @returns distance
 distance<-function(votant, candidats){apply(candidats, 1, function(x) sqrt(sum((votant-x)^2)))}
-
-######################################
-#transformation des scores en distance
-######################################
 
 #' Score to distance
 #' @export
@@ -62,10 +70,6 @@ ScoresToDist<-function(x, dim=2, method="linear")
 
   return(as.data.frame(T))
 }
-######################################
-#transformation des distances en scores
-######################################
-
 
 #' Distance to score
 #' @export

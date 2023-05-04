@@ -9,7 +9,10 @@
 #   Test Package:              'Ctrl + Shift + T'
 
 # faire qql chose de la manière (pour le package méthode de vote :
-# scrutin1 <- function(nVoter,nCandidat,situation) {
+
+# library(voteSim)
+# situation <- generate_beta(100,5)
+# scrutin <- function(nVoter,nCandidat,situation) {
 #
 #     le paramètre "situation" est le résultat d'une fonction du package "voteSim"
 #     pas besoin de nVoter et nCandidat, juste à récupérer le nombre de ligne/col
@@ -26,6 +29,7 @@
 #' @param lambda double
 #' @param min int
 #' @param max int
+#' @importFrom stats rbeta
 #' @returns scores
 generate_beta <- function(n_voters,n_candidats,beta_a = 0.5,beta_b = 0.5, lambda = 0,min = 0,max = 1) {
   scores<-matrix(rbeta(n_candidats*n_voters, shape1 = beta_a, shape2 = beta_b, ncp=lambda),c(n_candidats,n_voters))
@@ -39,6 +43,7 @@ generate_beta <- function(n_voters,n_candidats,beta_a = 0.5,beta_b = 0.5, lambda
 #' @param n_candidats integer
 #' @param min integer
 #' @param max integer
+#' @importFrom stats runif
 #' @returns scores
 generate_unif_continu <-function(n_voters, n_candidats, min=0, max=1){
   scores <- matrix(runif(n_candidats*n_voters, min=min, max=max),c(n_candidats,n_voters))
@@ -55,6 +60,10 @@ generate_unif_continu <-function(n_voters, n_candidats, min=0, max=1){
 #' @param score_method The method used to transform distances into scores. Must be either "linear" or "sigmoide". Default is "linear".
 #' @return A matrix of scores.
 #' @export
+#' @importFrom graphics text
+#' @importFrom graphics points
+#' @importFrom stats rbeta
+#' @importFrom stats runif
 #' @examples
 #' generate_spatial(n_voters = 100, n_candidats = 5, placement = "uniform", score_method = "linear")
 generate_spatial <- function(n_voters,n_candidats,placement = "uniform",score_method = "linear"){
