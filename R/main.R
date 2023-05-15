@@ -59,18 +59,18 @@ generate_spatial <- function(n_voters,n_candidats,placement = "uniform",score_me
   n_dim <- 2 # constante
   # === placement === #
   if (placement == "uniform"){
-    candidats<-data.frame(matrix(runif(n_candidats*n_dim), nrow = n_candidats, ncol=n_dim))
-    voters<-data.frame(matrix(runif(n_voters*n_dim), nrow = n_voters, ncol=n_dim))
+    candidats<-matrix(runif(n_candidats*n_dim), nrow = n_candidats, ncol=n_dim)
+    voters<-matrix(runif(n_voters*n_dim), nrow = n_voters, ncol=n_dim)
   }else if(placement == "beta"){
     beta_a= 1.2 # 2 = points centrés
     beta_b= 1.2
-    candidats <- data.frame(matrix(rbeta(n_candidats*n_dim, shape1 = beta_a, shape2 = beta_b),nrow = n_candidats,ncol = n_dim))
-    voters <- data.frame(matrix(rbeta(n_voters*n_dim, shape1 = beta_a, shape2 = beta_b), nrow = n_voters, ncol = n_dim))
+    candidats <- matrix(rbeta(n_candidats*n_dim, shape1 = beta_a, shape2 = beta_b),nrow = n_candidats,ncol = n_dim)
+    voters <- matrix(rbeta(n_voters*n_dim, shape1 = beta_a, shape2 = beta_b), nrow = n_voters, ncol = n_dim)
   }else{
     # ...
   }
   # === distance between voters / candidats === #
-  matrix_distances<-t(apply(voters,1, function(x) distance(x,candidats)))
+  matrix_distances<-apply(voters,1, function(x) distance(x,candidats))
 
   # === distance to score === # (linear / sigmoide)
   matrix_scores<-DistToScores(matrix_distances,method = score_method)
@@ -87,7 +87,7 @@ generate_spatial <- function(n_voters,n_candidats,placement = "uniform",score_me
     points(voters[sample(n_voters,200),])
   }
 
-  return(t(matrix_scores))
+  return(matrix_scores)
 }
 
 
