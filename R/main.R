@@ -87,6 +87,12 @@ generate_spatial <- function(n_voters,n_candidats,placement = "uniform",score_me
     points(voters[sample(n_voters,200),])
   }
 
+  #pref_rank <- preferences_to_ranks(matrix_scores)
+  #View(pref_rank)
+
+
+  #View(distance_to_pref(pref_rank))
+
   return(matrix_scores)
 }
 

@@ -118,3 +118,31 @@ MLSMU6 <- function(df, ndim=2){
   }
   MLSMU6<-list(X=xx, Z=zz)
 }
+
+#' Preferences_to_ranks
+#' @export
+#' @param preferences voters preferences
+#' @returns ranks
+preferences_to_ranks <- function(preferences) {
+  # Calculer les rangs de chaque élément sur chaque colonne
+  ranks <- apply(preferences, 2, rank)
+  # Inverser les rangs pour que le candidat le plus préféré soit le numéro 1
+  ranks <- nrow(ranks) + 1 - ranks
+  # Retourner les rangs
+  return(ranks)
+}
+
+#' Distance formula
+#' @export
+#' @param distance_matrix distance_matrix
+#' @returns mat_inverse
+distance_to_pref<- function(distance_matrix){
+  #mat_inverse <- apply(distance_matrix, 2, rev)
+  #mat_inverse <- apply(distance_matrix, 2, function(x) x[order(x, decreasing = TRUE)])
+  mat_inverse_rangs <- apply(distance_matrix, 2, order, decreasing = TRUE)
+  # Réarrangement des valeurs en utilisant les rangs inversés
+  #mat_inversee <- apply(mat_inverse_rangs, 2, function(x) mat[x])
+
+  return(mat_inverse_rangs)
+}
+
