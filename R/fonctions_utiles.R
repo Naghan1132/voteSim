@@ -11,6 +11,16 @@
 fpx <- function(x) (rank(x, ties.method = "max") - 0.5) / length(x)
 
 
+#' Rename_rows
+#' @export
+#' @param preferences voters preferences
+#' @returns preferences
+rename_rows <- function(preferences) {
+  n_candidates <- nrow(preferences)
+  n_voters <- ncol(preferences)
+  rownames(preferences) <- paste0("Candidate ", seq_len(n_candidates))
+  return(preferences)
+}
 
 #' Generalized inverse of the empirical cumulative function.
 #'
