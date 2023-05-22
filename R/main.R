@@ -21,7 +21,7 @@
 #' @importFrom stats rbeta
 #' @returns scores
 generate_beta <- function(n_voters,n_candidats,beta_a = 0.5,beta_b = 0.5, lambda = 0,min = 0,max = 1) {
-  set.seed(2023)
+  #set.seed(2023)
   scores<-matrix(rbeta(n_candidats*n_voters, shape1 = beta_a, shape2 = beta_b, ncp=lambda),c(n_candidats,n_voters))
   scores<-scores*(max-min)+min # on borne les prefs entre 0 et 1
   scores <- rename_rows(scores)
@@ -38,7 +38,7 @@ generate_beta <- function(n_voters,n_candidats,beta_a = 0.5,beta_b = 0.5, lambda
 #' @importFrom stats runif
 #' @returns scores
 generate_unif_continu <-function(n_voters, n_candidats, min=0, max=1){
-  set.seed(2023)
+  #set.seed(2023)
   scores <- matrix(runif(n_candidats*n_voters, min=min, max=max),c(n_candidats,n_voters))
   scores <- rename_rows(scores)
   print(scores)
@@ -62,7 +62,7 @@ generate_unif_continu <-function(n_voters, n_candidats, min=0, max=1){
 #' @examples
 #' generate_spatial(n_voters = 100, n_candidats = 5, placement = "uniform", score_method = "linear")
 generate_spatial <- function(n_voters,n_candidats,placement = "uniform",score_method = "linear"){
-  set.seed(2023)
+  #set.seed(2023)
   n_dim <- 2 # constante
   # === placement === #
   if (placement == "uniform"){
@@ -120,7 +120,7 @@ library(truncnorm)
 #'
 #' @export
 generate_norm<-function(n_candidats, n_voters, min=0, max=1, mean=0.5, sd=0.25){
-  set.seed(2023)
+  #set.seed(2023)
   scores<-matrix(rtruncnorm(n_candidats*n_voters, a=min, b=max, mean = mean, sd = sd),c(n_candidats,n_voters))
   scores <- rename_rows(t(scores))
   print(scores)
