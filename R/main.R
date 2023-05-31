@@ -58,7 +58,7 @@ generate_unif_continu <-function(n_voters, n_candidats, min=0, max=1){
 #' @importFrom graphics text
 #' @importFrom graphics points
 #' @importFrom stats rbeta
-#' @importFrom stats runif
+#' @importFrom stats runif'
 #' @examples
 #' generate_spatial(n_voters = 100, n_candidats = 5, placement = "uniform", score_method = "linear")
 generate_spatial <- function(n_voters,n_candidats,placement = "uniform",score_method = "linear"){
