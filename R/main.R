@@ -11,7 +11,7 @@
 
 #' Generates a simulation of voting according to a beta law, returns voters preferences
 #' @export
-#' @param n_voters integer
+#' @param n_voters integer, represents the number of voters
 #' @param n_candidats integer
 #' @param beta_a double
 #' @param beta_b double
