@@ -148,7 +148,7 @@ generate_one_beta_two_unif_candidate <-function(n_voters, n_candidats,beta_a = 0
   print(scores2)
   scores <- rbind(scores1,scores2)
   scores<-scores*(max-min)+min
-  scores <- rename_rows(scores)
+  scores <- rename_rows_beta_candidate(scores)
   print(scores)
   return(scores)
 }

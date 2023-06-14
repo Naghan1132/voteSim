@@ -13,13 +13,21 @@ fpx <- function(x) (rank(x, ties.method = "max") - 0.5) / length(x)
 
 #' Rename_rows
 #' @export
-#' @param preferences voters preferences
-#' @returns preferences
-rename_rows <- function(preferences) {
-  n_candidates <- nrow(preferences)
-  n_voters <- ncol(preferences)
-  rownames(preferences) <- paste0("Candidate ", seq_len(n_candidates))
-  return(preferences)
+#' @param scores voters scores
+#' @returns scores
+rename_rows <- function(scores) {
+  rownames(scores) <- paste0("Candidate ", seq_len(nrow(scores)))
+  return(scores)
+}
+
+#' Rename rows for beta candidate
+#' @export
+#' @param scores voters scores
+#' @returns scores
+rename_rows_beta_candidate <- function(scores) {
+  rownames(scores) <- paste0("unif ", seq_len(nrow(scores)))
+  rownames(scores)[nrow(scores)] <- "beta"
+  return(scores)
 }
 
 #' Generalized inverse of the empirical cumulative function.
