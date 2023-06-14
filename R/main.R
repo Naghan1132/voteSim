@@ -23,7 +23,7 @@
 generate_beta <- function(n_voters,n_candidats,beta_a = 0.5,beta_b = 0.5, lambda = 0,min = 0,max = 1) {
   #set.seed(2023)
   scores<-matrix(rbeta(n_candidats*n_voters, shape1 = beta_a, shape2 = beta_b, ncp=lambda),c(n_candidats,n_voters))
-  scores<-scores*(max-min)+min # on borne les prefs entre 0 et 1
+  scores<-scores*(max-min)+min
   scores <- rename_rows(scores)
   print(scores)
   return(scores)
@@ -58,7 +58,7 @@ generate_unif_continu <-function(n_voters, n_candidats, min=0, max=1){
 #' @importFrom graphics text
 #' @importFrom graphics points
 #' @importFrom stats rbeta
-#' @importFrom stats runif'
+#' @importFrom stats runif
 #' @examples
 #' generate_spatial(n_voters = 100, n_candidats = 5, placement = "uniform", score_method = "linear")
 generate_spatial <- function(n_voters,n_candidats,placement = "uniform",score_method = "linear"){
@@ -128,3 +128,27 @@ generate_norm<-function(n_candidats, n_voters, min=0, max=1, mean=0.5, sd=0.25){
 }
 
 
+#' generate one beta and two unif candidate, returns voters preferences
+#' @export
+#' @param n_voters integer
+#' @param n_candidats integer
+#' @param beta_a double
+#' @param beta_b double
+#' @param lambda double
+#' @param min integer
+#' @param max integer
+#' @importFrom stats runif
+#' @importFrom stats rbeta
+#' @returns scores
+generate_one_beta_two_unif_candidate <-function(n_voters, n_candidats,beta_a = 0.5,beta_b = 0.5, lambda = 0, min=0, max=1){
+  n_candidates_unif <- n_candidats - 1
+  scores1 <- matrix(runif(n_candidates_unif*n_voters, min=min, max=max),c(n_candidates_unif,n_voters))
+  scores2 <- matrix(rbeta(1*n_voters, shape1 = beta_a, shape2 = beta_b, ncp=lambda),c(1,n_voters))
+  print(scores1)
+  print(scores2)
+  scores <- rbind(scores1,scores2)
+  scores<-scores*(max-min)+min
+  scores <- rename_rows(scores)
+  print(scores)
+  return(scores)
+}
